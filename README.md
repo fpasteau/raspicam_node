@@ -19,63 +19,56 @@ Requirements
 
 
 
-Get Raspbian
-
-http://elinux.org/RPi_Easy_SD_Card_Setup
+Get Raspbian http://elinux.org/RPi_Easy_SD_Card_Setup
 
 
 
 
 
-Enable Camera and expand FS
-
-http://www.raspberrypi.org/archives/3890
+Enable Camera and expand FS http://www.raspberrypi.org/archives/3890
 
 
+	sudo apt-get update
 
-sudo apt-get update
-
-sudo apt-get upgrade
+	sudo apt-get upgrade
 
 
-Get ROS Groovy from
-
-http://www.ros.org/wiki/groovy/Installation/Raspbian
+Get ROS Groovy from http://www.ros.org/wiki/groovy/Installation/Raspbian
 
 
 
-sudo apt-get install ros-groovy-image-transport ros-groovy-image-transport-plugins ros-groovy-image-transport-plugins ros-groovy-camera-info-manager
+	sudo apt-get install ros-groovy-image-transport ros-groovy-image-transport-plugins ros-groovy-image-transport-plugins ros-groovy-camera-info-manager
 
 
 
 
-git clone https://github.com/raspberrypi/userland.git /home/pi/userland
+	git clone https://github.com/raspberrypi/userland.git /home/pi/userland
 
-cd /home/pi
+	cd /home/pi
 
-mkdir catkin_ws
-
-
-
-source /opt/ros/groovy/setup.bash
-
-export ROS_WORKSPACE=/home/pi/catkin_ws
+	mkdir catkin_ws
 
 
 
-cd /home/pi/catkin_ws
+	source /opt/ros/groovy/setup.bash
 
-mkdir src
+	export ROS_WORKSPACE=/home/pi/catkin_ws
 
-cd src
 
-git clone https://github.com/fpasteau/raspicam_node.git raspicam
 
-cd ..
+	cd /home/pi/catkin_ws
 
-catkin_make
+	mkdir src
 
-source devel/setup.bash
+	cd src
+
+	git clone https://github.com/fpasteau/raspicam_node.git raspicam
+
+	cd ..
+
+	catkin_make
+
+	source devel/setup.bash
 
 then you can run the node using
 
@@ -85,11 +78,17 @@ rosrun raspicam raspicam_node
 
 Topic:
 
-/camera/compressed :
+/camera/image/compressed (for raspicam_node):
 
 	publish sensor_msgs/CompressedImage
 
 	jpeg from the camera module
+	
+/camera/image (for raspicam_raw_node):
+
+	publish sensor_msgs/Image
+
+	image in bgra8 from the camera module
 
 camera/camera_info :
 
@@ -169,6 +168,8 @@ TO DO List :
 	- remove warnings from raspicamcontrol
 
 	- reenable vc_gencmd
+	
+	- check raspicam_raw_node for bugs
 
 
 
